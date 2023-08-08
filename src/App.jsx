@@ -95,10 +95,11 @@ function App() {
         <input
           onChange={(e) => setSearchedData(e.target.value)}
           style={{
-            height: "1.5rem",
-            borderRadius: "10px",
+            height: "2rem",
+            borderRadius: "15px",
             textAlign: "center",
             marginBottom: "1rem",
+            width:'20rem'
           }}
           placeholder="search"
         />
