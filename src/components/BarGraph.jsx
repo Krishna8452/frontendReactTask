@@ -9,7 +9,7 @@ const BarGraph = ({data}) => {
         <BarChart data ={data} width={100} height={100}>
             <XAxis dataKey='code'/>
             <YAxis/>
-            <Bar dataKey='rate_float' fill="#9a7eed" />
+            <Bar dataKey='rate_float' fill="#417bcc" />
         </BarChart>
     </ResponsiveContainer>
     </div>

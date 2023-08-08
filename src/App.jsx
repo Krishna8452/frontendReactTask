@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableHead,
@@ -22,12 +22,18 @@ function App() {
   const [detailMode, setDetailMode] = useState(false);
   const [detailData, setDetailData] = useState([]);
   const [searchData, setSearchedData] = useState("");
-  
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: "ascending",
+  });
 
   useEffect(() => {
     fetchData();
-    setInterval(fetchData, 10000)
-    console.log("hello")
+    const intervalId = setInterval(fetchData, 10000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   const fetchData = async () => {
@@ -42,22 +48,59 @@ function App() {
         ...details,
       }));
       setData(dataArray);
-    }catch(error){
+    } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
+
   const bpiDetails = (code) => {
     const singleData = data.filter((data) => data.code === code);
     setDetailData(singleData);
     setDetailMode(true);
   };
-  console.log(fullData,'dfd')
+
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedData = () => {
+    const sortableData = [...data];
+    if (sortConfig.key) {
+      sortableData.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableData;
+  };
+
   return (
     <>
-      <BarGraph data= {data}/>
+      <h1>Bar Graph</h1>
+      <BarGraph data={data} />
       <h2>{fullData.chartName}</h2>
       <p>{fullData.disclaimer}</p>
-      {!detailMode && <input onChange={(e)=>setSearchedData(e.target.value)} style={{height:'1.5rem', borderRadius:'10px', textAlign:'center', marginBottom:'1rem'}} placeholder="search"/>}
+      {!detailMode && (
+        <input
+          onChange={(e) => setSearchedData(e.target.value)}
+          style={{
+            height: "1.5rem",
+            borderRadius: "10px",
+            textAlign: "center",
+            marginBottom: "1rem",
+          }}
+          placeholder="search"
+        />
+      )}
       <TableContainer component={Paper}>
         {!detailMode ? (
           "List of Coins"
@@ -77,30 +120,43 @@ function App() {
           <Table sx={{ minWidth: 900 }}>
             <TableHead>
               <TableRow>
-                <TableCell size="small">Code</TableCell>
-                <TableCell size="small">Symbol</TableCell>
-                <TableCell size="small">Rate</TableCell>
+                <TableCell size="small">
+                  <Button onClick={() => requestSort("code")}>Code</Button>
+                </TableCell>
+                <TableCell size="small">
+                  <Button onClick={() => requestSort("symbol")}>Symbol</Button>
+                </TableCell>
+                <TableCell size="small">
+                  <Button onClick={() => requestSort("rate")}>Rate</Button>
+                </TableCell>
                 <TableCell size="small">Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.filter((data)=>data.code.toLowerCase().includes(searchData.toLowerCase())).map((item) => (
-            <TableRow key={item.code}>
-              <TableCell size="small">{item.code}</TableCell>
-              <TableCell size="small">{item.symbol}</TableCell>
-              <TableCell size="small">{item.rate}</TableCell>
-              <TableCell size="small">
-                <Button
-                  onClick={() => bpiDetails(item.code)}
-                  size="small"
-                  variant="outlined"
-                  color="primary"
-                  title="view"
-                  startIcon={<VisibilityIcon />}
-                ></Button>
-              </TableCell>
-            </TableRow>
-              ))}
+              {sortedData()
+                .filter((data) =>
+                  data.code.toLowerCase().includes(searchData.toLowerCase())
+                )
+                .map((item) => (
+                  <TableRow key={item.code}>
+                    <TableCell size="small">{item.code}</TableCell>
+                    <TableCell size="small">{item.symbol}</TableCell>
+                    <TableCell size="small">{item.rate}</TableCell>
+                    <TableCell size="small">
+                      <Button
+                        onClick={() => bpiDetails(item.code)}
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                        title="view"
+                        placeholder="view"
+                        startIcon={<VisibilityIcon />}
+                      >
+                        view
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
@@ -110,4 +166,5 @@ function App() {
     </>
   );
 }
+
 export default App;
