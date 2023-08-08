@@ -14,6 +14,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import Paper from "@mui/material/Paper";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Details from "./components/Details";
+import Header from './components/Header'
 import BarGraph from "./components/BarGraph";
 
 function App() {
@@ -85,7 +86,8 @@ function App() {
 
   return (
     <>
-      <h1>Bar Graph</h1>
+      <Header/>
+      <h2>Bar Graph</h2>
       <BarGraph data={data} />
       <h2>{fullData.chartName}</h2>
       <p>{fullData.disclaimer}</p>
