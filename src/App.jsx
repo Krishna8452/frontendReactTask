@@ -14,6 +14,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import Paper from "@mui/material/Paper";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Details from "./components/Details";
+import BarGraph from "./components/BarGraph";
 
 function App() {
   const [fullData, setFullData] = useState([]);
@@ -25,6 +26,8 @@ function App() {
 
   useEffect(() => {
     fetchData();
+    setInterval(fetchData, 10000)
+    console.log("hello")
   }, []);
 
   const fetchData = async () => {
@@ -51,6 +54,7 @@ function App() {
   console.log(fullData,'dfd')
   return (
     <>
+      <BarGraph data= {data}/>
       <h2>{fullData.chartName}</h2>
       <p>{fullData.disclaimer}</p>
       {!detailMode && <input onChange={(e)=>setSearchedData(e.target.value)} style={{height:'1.5rem', borderRadius:'10px', textAlign:'center', marginBottom:'1rem'}} placeholder="search"/>}
