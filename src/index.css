@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(42, 73, 134, 0.87);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,7 +15,6 @@
 body {
   margin: 0;
   display: flex;
-  flex-direction: column;
   place-items: center;
   width: 100%;
   height: 100%;
@@ -25,11 +24,19 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+.bargraph{
+  display: flex;
+  justify-content: center;
+}
 
 @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
+ body{
+  height: 100%;
+  width: 100%;
+ }
+ .bargraph{
+  width: 100%;
+  height:100%
+ }
 
 }

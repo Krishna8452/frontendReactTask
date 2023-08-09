@@ -14,7 +14,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import Paper from "@mui/material/Paper";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Details from "./components/Details";
-import Header from './components/Header'
+import Header from "./components/Header";
 import BarGraph from "./components/BarGraph";
 
 function App() {
@@ -83,14 +83,16 @@ function App() {
     }
     return sortableData;
   };
-
+  const {chartName, disclaimer, time} = fullData
+    console.log(fullData,'df')
   return (
     <>
-      <Header/>
+      <Header />
       <h2>Bar Graph</h2>
       <BarGraph data={data} />
-      <h2>{fullData.chartName}</h2>
-      <p>{fullData.disclaimer}</p>
+      <h2>{chartName}</h2>
+      <p>{disclaimer}</p>
+      {time && <p>{time.updated}, {time.updatedISO}, {time.updateduk}</p>}
       {!detailMode && (
         <input
           onChange={(e) => setSearchedData(e.target.value)}
@@ -99,7 +101,7 @@ function App() {
             borderRadius: "15px",
             textAlign: "center",
             marginBottom: "1rem",
-            width:'20rem'
+            width: "20rem",
           }}
           placeholder="search"
         />
@@ -143,7 +145,9 @@ function App() {
                 .map((item) => (
                   <TableRow key={item.code}>
                     <TableCell size="small">{item.code}</TableCell>
-                    <TableCell size="small">{item.symbol}</TableCell>
+                    <TableCell size="small">
+                      <span>{item.symbol}</span>
+                    </TableCell>
                     <TableCell size="small">{item.rate}</TableCell>
                     <TableCell size="small">
                       <Button
