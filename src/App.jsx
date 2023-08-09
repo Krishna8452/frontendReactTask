@@ -92,7 +92,7 @@ function App() {
       <BarGraph data={data} />
       <h2>{chartName}</h2>
       <p>{disclaimer}</p>
-      {time && <p>{time.updated}, {time.updatedISO}, {time.updateduk}</p>}
+      {time && <p> Updated at: {time.updated}, {time.updatedISO}, {time.updateduk}</p>}
       {!detailMode && (
         <input
           onChange={(e) => setSearchedData(e.target.value)}
