@@ -25,12 +25,16 @@ const Details = ({ detail }) => {
             <TableRow>
               <TableCell size="small">Symbol</TableCell>
               <TableCell size="small">
-                <span>{symbol}</span>
+                <span dangerouslySetInnerHTML={{ __html: symbol }} />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell size="small">Rate</TableCell>
-              <TableCell size="small">{rate}</TableCell>
+
+              <TableCell size="small">
+                <span dangerouslySetInnerHTML={{ __html: symbol }} />
+                {rate}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell size="small">Description</TableCell>
@@ -38,7 +42,11 @@ const Details = ({ detail }) => {
             </TableRow>
             <TableRow>
               <TableCell size="small">Float_Rate</TableCell>
-              <TableCell size="small">{rate_float}</TableCell>
+              <TableCell size="small">
+                {" "}
+                <span dangerouslySetInnerHTML={{ __html: symbol }} />
+                {rate_float}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

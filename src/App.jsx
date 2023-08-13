@@ -146,9 +146,9 @@ function App() {
                   <TableRow key={item.code}>
                     <TableCell size="small">{item.code}</TableCell>
                     <TableCell size="small">
-                      <span dangerouslySetInnerHTML={{ __html: item.symbol}}></span>
+                      <span dangerouslySetInnerHTML={{ __html: item.symbol}}/>
                     </TableCell>
-                    <TableCell size="small" > <span dangerouslySetInnerHTML={{ __html: item.symbol}}></span>{item.rate}</TableCell>
+                    <TableCell size="small" > <span dangerouslySetInnerHTML={{ __html: item.symbol}}/>{item.rate}</TableCell>
                     <TableCell size="small">
                       <Button
                         onClick={() => bpiDetails(item.code)}
